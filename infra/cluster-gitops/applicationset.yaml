@@ -2,21 +2,20 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: cluster-config
-  namespace: openshift-gitops
 spec:
   generators:
-    - list:
-        elements:
-          - name: openshift-pipelines
-            path: infra/openshift-pipelines
+    - git:
+        repoURL: &repo https://github.com/rh-hcas-emea/cluster-config.git
+        revision: &rev HEAD
+        directories: []
   template:
     metadata:
-      name: '{{name}}'
+      name: '{{path.basename}}'
     spec:
       project: default
       source:
-        repoURL: https://github.com/rh-hcas-emea/cluster-config.git
-        targetRevision: HEAD
+        repoURL: *repo
+        targetRevision: *rev
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
@@ -28,4 +27,3 @@ spec:
           - ApplyOutOfSyncOnly=true
         retry:
           limit: 3
-
