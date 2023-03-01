@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tenant-config
+spec:
+  generators:
+    - list:
+        elements: []
+  template:
+    metadata:
+      name: 'tenant-{{tenant}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/rh-hcas-emea/tenant-config.git
+        targetRevision: HEAD
+        path: 'tenants/{{tenant}}'
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ApplyOutOfSyncOnly=true
+        retry:
+          limit: 3

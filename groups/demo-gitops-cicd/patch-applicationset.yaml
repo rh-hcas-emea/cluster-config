@@ -1,0 +1,4 @@
+- op: add
+  path: /spec/generators/0/list/elements
+  value:
+    - tenant: demo-gitops-cicd
