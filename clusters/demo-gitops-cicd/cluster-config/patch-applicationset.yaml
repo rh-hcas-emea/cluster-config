@@ -1,4 +1,4 @@
-- op: replace
+- op: add
   path: /spec/generators/0/git/directories
   value:
     - path: clusters/demo-gitops-cicd/*
