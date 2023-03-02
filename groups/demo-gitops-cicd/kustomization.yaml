@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - ../../infra/openshift-pipelines
-  - ../../infra/tenant-config
+  - ../../infra/tenant-gitops
 
 patches:
   - path: patch-applicationset.yaml
